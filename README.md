@@ -99,7 +99,7 @@ Start the API:
 dotnet run --project CoffeeMachine.Api
 ```
 
-The API will be available at `https://localhost:44375` or `https://localhost:44375/swagger`.
+The API will be available at `http://localhost:5288` or `http://localhost:5288/swagger`.
 
 ## Testing
 

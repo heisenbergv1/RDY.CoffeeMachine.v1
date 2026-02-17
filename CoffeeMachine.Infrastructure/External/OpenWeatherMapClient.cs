@@ -14,7 +14,7 @@ public class OpenWeatherMapClient : IWeatherClient
         _httpClient = httpClient;
         // Read API key from configuration section "Weather:ApiKey"
         _apiKey = configuration["Weather:ApiKey"] 
-                  ?? throw new ArgumentNullException("Weather:ApiKey not configured in appsettings.json");
+                  ?? throw new ArgumentNullException(nameof(configuration));
     }
 
     public async Task<double?> GetCurrentTemperatureAsync(string city)

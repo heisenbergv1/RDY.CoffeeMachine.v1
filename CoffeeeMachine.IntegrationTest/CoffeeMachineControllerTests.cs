@@ -52,14 +52,14 @@ public class CoffeeMachineControllerTests : IClassFixture<WebApplicationFactory<
         HttpResponseMessage? response = null;
 
         // Clean up any previous calls to ensure we are testing the 5th call logic correctly
-        for (int i = 0; i < 5; i++)
+        for (var i = 0; i < 5; i++)
         {
             response = await client.GetAsync("/api/coffeemachine/brew-coffee");
             if (response.StatusCode == HttpStatusCode.ServiceUnavailable)
                 break;
         }
 
-        for (int i = 0; i < 5; i++)
+        for (var i = 0; i < 5; i++)
         {
             response = await client.GetAsync("/api/coffeemachine/brew-coffee");
         }
@@ -74,7 +74,7 @@ public class CoffeeMachineControllerTests : IClassFixture<WebApplicationFactory<
     {
         var client = CreateMockClient(20.0, new DateTime(2026, 2, 17));
 
-        for (int i = 0; i < 5; i++)
+        for (var i = 0; i < 5; i++)
             await client.GetAsync("/api/coffeemachine/brew-coffee");
 
         var response = await client.GetAsync("/api/coffeemachine/brew-coffee");
@@ -103,9 +103,7 @@ public class CoffeeMachineControllerTests : IClassFixture<WebApplicationFactory<
         var mockDateProvider = new Mock<IDateTimeProvider>();
         mockDateProvider.Setup(d => d.Now).Returns(mockDate);
 
-        return _factory.WithWebHostBuilder(builder =>
-        {
-            builder.ConfigureServices(services =>
+        return _factory.WithWebHostBuilder(builder => builder.ConfigureServices(services =>
             {
                 // Remove existing IWeatherClient registration if any
                 var weatherDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IWeatherClient));
@@ -116,7 +114,6 @@ public class CoffeeMachineControllerTests : IClassFixture<WebApplicationFactory<
                 var datetimeDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IDateTimeProvider));
                 if (datetimeDescriptor != null) services.Remove(datetimeDescriptor);
                 services.AddSingleton(mockDateProvider.Object);
-            });
-        }).CreateClient();
+            })).CreateClient();
     }
 }

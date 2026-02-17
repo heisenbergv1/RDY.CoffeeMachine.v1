@@ -44,7 +44,7 @@ public class CoffeeMachineControllerUnitTests
         var controller1 = CreateController("192.168.1.10", 20, new DateTime(2026, 2, 17));
         var controller2 = CreateController("192.168.1.20", 20, new DateTime(2026, 2, 17));
 
-        for (int i = 0; i < 4; i++)
+        for (var i = 0; i < 4; i++)
             await controller1.Get();
 
         var result1 = await controller1.Get();
@@ -76,8 +76,9 @@ public class CoffeeMachineControllerUnitTests
         var result = await controller.Get();
         result.Should().BeOfType<OkObjectResult>();
 
-        var body = ((OkObjectResult)result).Value as dynamic;
-        ((string)body.Message).Should().Be("Your piping hot coffee is ready");
+        var body = ((OkObjectResult)result).Value as CoffeeResponse;
+        body.Should().NotBeNull();
+        body.Message.Should().Be("Your piping hot coffee is ready");
     }
 
     [Fact]

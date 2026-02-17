@@ -9,9 +9,9 @@ namespace CoffeeMachine.Infrastructure.Extensions;
 
 public static class DependencyInjectionExtension
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        services.AddLibraries(configuration);
+        services.AddLibraries();
 
         services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
 
@@ -21,12 +21,9 @@ public static class DependencyInjectionExtension
         return services;
     }
 
-    public static IServiceCollection AddLibraries(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddLibraries(this IServiceCollection services)
     {
-        services.AddMediatR(cfg =>
-        {
-            cfg.RegisterServicesFromAssembly(typeof(ApplicationAssemblyMarker).Assembly);
-        });
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationAssemblyMarker).Assembly));
 
         return services;
     }
