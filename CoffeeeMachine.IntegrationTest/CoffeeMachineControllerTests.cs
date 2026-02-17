@@ -1,6 +1,5 @@
 ﻿using CoffeeMachine.Api.Dtos;
 using CoffeeMachine.Application.Interfaces;
-using Controllers;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;

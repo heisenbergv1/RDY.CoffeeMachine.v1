@@ -1,5 +1,5 @@
+using CoffeeMachine.Api.Extensions;
 using CoffeeMachine.Infrastructure.Extensions;
-using Extensions;
 
 #pragma warning disable IDE0211 // Convert to 'Program.Main' style program
 var builder = WebApplication.CreateBuilder(args);

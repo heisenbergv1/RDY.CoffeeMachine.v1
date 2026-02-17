@@ -65,7 +65,7 @@ The project is structured using **Clean Architecture** principles:
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone git@github.com:heisenbergv1/RDY.CoffeeMachine.git
 cd CoffeeMachine.Api
 ````
 

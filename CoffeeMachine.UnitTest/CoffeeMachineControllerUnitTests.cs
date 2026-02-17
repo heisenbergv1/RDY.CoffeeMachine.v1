@@ -1,6 +1,6 @@
 ﻿using CoffeeMachine.Api.Dtos;
 using CoffeeMachine.Application.Interfaces;
-using Controllers;
+using CoffeeMachine.Api.Controllers;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +10,7 @@ namespace CoffeeMachine.UnitTest;
 
 public class CoffeeMachineControllerUnitTests
 {
-    private CoffeeMachineController CreateController(string ip, double? temp = null, DateTime? now = null)
+    private static CoffeeMachineController CreateController(string ip, double? temp = null, DateTime? now = null)
     {
         // Mock the IMediator
         var mediatorMock = new Mock<MediatR.IMediator>();
@@ -38,21 +38,23 @@ public class CoffeeMachineControllerUnitTests
     [Fact]
     public async Task Different_IPs_Should_Have_Independent_Counters()
     {
-        if (DateTime.Now.Month == 4 && DateTime.Now.Day == 1)
-            return;
-
         var controller1 = CreateController("192.168.1.10", 20, new DateTime(2026, 2, 17));
         var controller2 = CreateController("192.168.1.20", 20, new DateTime(2026, 2, 17));
 
         for (var i = 0; i < 4; i++)
             await controller1.Get();
 
+        // Assert response body is empty for 503
         var result1 = await controller1.Get();
         result1.Should().BeOfType<EmptyResult>();
         controller1.Response.StatusCode.Should().Be(StatusCodes.Status503ServiceUnavailable);
 
+        // Assert response body contains expected message for OK
         var result2 = await controller2.Get();
         result2.Should().BeOfType<OkObjectResult>();
+        var okBody = ((OkObjectResult)result2).Value as CoffeeResponse;
+        okBody.Should().NotBeNull();
+        okBody!.Message.Should().Be("Your piping hot coffee is ready");
     }
 
     [Fact]

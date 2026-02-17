@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Concurrent;
 
-namespace Controllers;
+namespace CoffeeMachine.Api.Controllers;
 
 [ApiController]
 public class CoffeeMachineController : ControllerBase
