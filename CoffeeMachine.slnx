@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="CoffeeeMachine.IntegrationTest/CoffeeeMachine.IntegrationTest.csproj" />
+  <Project Path="CoffeeMachine.Application/CoffeeMachine.Application.csproj" />
+  <Project Path="CoffeeMachine.Infrastructure/CoffeeMachine.Infrastructure.csproj" />
+  <Project Path="CoffeeMachine.UnitTest/CoffeeMachine.UnitTest.csproj" />
+  <Project Path="CoffeeMachine.Api/CoffeeMachine.Api.csproj" />
+</Solution>
