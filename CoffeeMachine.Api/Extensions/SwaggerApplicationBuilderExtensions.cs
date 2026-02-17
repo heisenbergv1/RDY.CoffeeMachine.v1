@@ -1,4 +1,8 @@
-﻿namespace CoffeeMachine.Api.Extensions;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
+namespace Extensions;
 
 /// <summary>
 /// Middleware helpers for Swagger / SwaggerUI.

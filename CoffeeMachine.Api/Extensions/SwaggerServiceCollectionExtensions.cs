@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi;
 
-namespace CoffeeMachine.Api.Extensions;
+namespace Extensions;
 
 /// <summary>
 /// Swagger / OpenAPI registration helpers shared across services.

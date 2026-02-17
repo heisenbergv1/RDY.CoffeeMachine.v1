@@ -1,6 +1,6 @@
 # CoffeeMachine API
 
-A .NET Core HTTP API that simulates an internet-connected coffee machine. Implements Clean Architecture principles, unit and integration tests.
+A .NET Core HTTP API that simulates an internet-connected coffee machine. Implements Clean Architecture principles, unit and integration tests, and integrates with a third-party weather API for extra credit features.
 
 ## Overview
 
@@ -17,11 +17,27 @@ Behavior:
 1. Returns JSON with a coffee message and ISO-8601 timestamp.
 2. Every 5th request per IP returns `503 Service Unavailable`.
 3. On April 1st, always returns `418 I'm a teapot`.
+4. Extra credit: Returns "Your refreshing iced coffee is ready" when the weather temperature > 30°C.
+
+## Clean Architecture Rationale
+
+The project is structured using **Clean Architecture** principles:
+
+- **Separation of Concerns:**  
+  - **Controllers / API Layer:** Handles HTTP requests/responses.  
+  - **Application Layer:** Contains MediatR commands/queries and business logic (e.g., `GetCoffeeMessageHandler`).  
+  - **Infrastructure Layer:** Handles external services, such as the OpenWeatherMap API client.  
+
+- **Benefits:**  
+  - Easier to maintain, test, and swap implementations.  
+  - Decouples business logic from framework-specific code (ASP.NET Core).  
+  - Supports Dependency Injection and mocking for unit and integration testing.
 
 ## Notable .NET 3rd-Party Libraries
 
 | Library                    | Purpose & Rationale                                                                                                              |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| **MediatR**                | Implements the Command/Query pattern; decouples request handling from controllers, simplifying testability and maintainability.  |
 | **FluentAssertions**       | Provides expressive assertions for unit and integration tests. Improves readability and debugging of test failures.              |
 | **Moq**                    | Mocking framework used in unit tests to simulate external dependencies like `IWeatherClient`.                                    |
 | **Swashbuckle.AspNetCore** | Enables automatic OpenAPI specification generation and interactive Swagger UI for API documentation and manual endpoint testing. |
@@ -40,12 +56,16 @@ Behavior:
 - [x] Implemented in .NET Core 10.0 LTS.
 - [x] Includes unit and integration tests for all critical scenarios.
 
+**Extra Credit:**
+
+- [x] Weather-based iced coffee message implemented via `IWeatherClient` and MediatR query handler.
+
 ## Setup & Installation
 
 1. Clone the repository:
 
 ```bash
-git clone git@github.com:heisenbergv1/RDY.CoffeeMachine.git
+git clone <repository-url>
 cd CoffeeMachine.Api
 ````
 
@@ -55,8 +75,7 @@ cd CoffeeMachine.Api
 dotnet restore
 ```
 
-3. Copy appsettings.json.example to appsettings.json, then add your OpenWeatherMap API key (https://home.openweathermap.org/api_keys
-) to the appropriate configuration section:
+3. Configure the API key for OpenWeatherMap (https://home.openweathermap.org/api_keys) in `appsettings.json`:
 
 ```json
 {
