@@ -75,7 +75,8 @@ cd CoffeeMachine.Api
 dotnet restore
 ```
 
-3. Configure the API key for OpenWeatherMap (https://home.openweathermap.org/api_keys) in `appsettings.json`:
+3. Copy `appsettings.json.example` to `appsettings.json`, then add your OpenWeatherMap API key (https://home.openweathermap.org/api_keys
+) to the appropriate configuration section:
 
 ```json
 {
