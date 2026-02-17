@@ -23,7 +23,7 @@ public class CoffeeMachineControllerTests : IClassFixture<WebApplicationFactory<
     public async Task Cold_Weather_And_Not_April_First_Should_Return_200_With_Hot_Coffee_Message()
     {
         var client = CreateMockClient(20.0, new DateTime(2026, 2, 17));
-        var response = await client.GetAsync("/api/coffeemachine/brew-coffee");
+        var response = await client.GetAsync("/brew-coffee");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var body = await response.Content.ReadFromJsonAsync<CoffeeResponse>();
         body!.Message.Should().Be("Your piping hot coffee is ready");
@@ -34,7 +34,7 @@ public class CoffeeMachineControllerTests : IClassFixture<WebApplicationFactory<
     public async Task Hot_Temperature_Should_Return_Iced_Coffee_Message()
     {
         var client = CreateMockClient(35.0, new DateTime(2026, 2, 17));
-        var response = await client.GetAsync("/api/coffeemachine/brew-coffee");
+        var response = await client.GetAsync("/brew-coffee");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var body = await response.Content.ReadFromJsonAsync<CoffeeResponse>();
@@ -54,14 +54,14 @@ public class CoffeeMachineControllerTests : IClassFixture<WebApplicationFactory<
         // Clean up any previous calls to ensure we are testing the 5th call logic correctly
         for (var i = 0; i < 5; i++)
         {
-            response = await client.GetAsync("/api/coffeemachine/brew-coffee");
+            response = await client.GetAsync("/brew-coffee");
             if (response.StatusCode == HttpStatusCode.ServiceUnavailable)
                 break;
         }
 
         for (var i = 0; i < 5; i++)
         {
-            response = await client.GetAsync("/api/coffeemachine/brew-coffee");
+            response = await client.GetAsync("/brew-coffee");
         }
 
         response!.StatusCode.Should().Be(HttpStatusCode.ServiceUnavailable);
@@ -75,9 +75,9 @@ public class CoffeeMachineControllerTests : IClassFixture<WebApplicationFactory<
         var client = CreateMockClient(20.0, new DateTime(2026, 2, 17));
 
         for (var i = 0; i < 5; i++)
-            await client.GetAsync("/api/coffeemachine/brew-coffee");
+            await client.GetAsync("/brew-coffee");
 
-        var response = await client.GetAsync("/api/coffeemachine/brew-coffee");
+        var response = await client.GetAsync("/brew-coffee");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var body = await response.Content.ReadFromJsonAsync<CoffeeResponse>();
         body!.Message.Should().Be("Your piping hot coffee is ready");
@@ -88,7 +88,7 @@ public class CoffeeMachineControllerTests : IClassFixture<WebApplicationFactory<
     public async Task Should_Return_418_On_April_First()
     {
         var client = CreateMockClient(20.0, new DateTime(2026, 4, 1));
-        var response = await client.GetAsync("/api/coffeemachine/brew-coffee");
+        var response = await client.GetAsync("/brew-coffee");
         response.StatusCode.Should().Be((HttpStatusCode)418);
         var body = await response.Content.ReadAsStringAsync();
         body.Should().BeEmpty();

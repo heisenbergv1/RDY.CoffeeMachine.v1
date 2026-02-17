@@ -7,7 +7,6 @@ using System.Collections.Concurrent;
 
 namespace Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
 public class CoffeeMachineController : ControllerBase
 {

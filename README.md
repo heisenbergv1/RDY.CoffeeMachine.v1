@@ -8,7 +8,7 @@ This API exposes a single endpoint:
 
 ```
 
-GET /api/coffeemachine/brew-coffee
+GET /brew-coffee
 
 ````
 
