@@ -33,7 +33,6 @@ Behavior:
 - [x] GET `/brew-coffee` returns 200 OK with message + ISO-8601 timestamp.
 - [x] Every 5th call per IP returns 503 Service Unavailable with empty body.
 - [x] April 1st calls always return 418 I'm a teapot with empty body.
-- [x] Returns "Your refreshing iced coffee is ready" when weather > 30°C using OpenWeatherMap API.
 
 **Non-Functional Requirements:**
 
