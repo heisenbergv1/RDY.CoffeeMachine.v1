@@ -1,11 +1,13 @@
-using CoffeeMachine.Api.Controllers;
 using CoffeeMachine.Api.Extensions;
+using CoffeeMachine.Infrastructure.Extensions;
 
+#pragma warning disable IDE0211 // Convert to 'Program.Main' style program
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
+#pragma warning restore IDE0211 // Convert to 'Program.Main' style program
 
 // Add services to the container.
+builder.Services.AddInfrastructure();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwagger("Coffee Machine Service API", "v1");

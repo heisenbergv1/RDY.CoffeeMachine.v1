@@ -1,4 +1,7 @@
 ﻿using CoffeeMachine.Api.Dtos;
+using CoffeeMachine.Application.Interfaces;
+using CoffeeMachine.Application.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Concurrent;
 
@@ -10,9 +13,11 @@ public class CoffeeMachineController : ControllerBase
     // Track calls per IP address
     private static readonly ConcurrentDictionary<string, int> _ipCallCounts = new();
     private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IMediator _mediator;
 
-    public CoffeeMachineController(IDateTimeProvider dateTimeProvider)
+    public CoffeeMachineController(IMediator mediator, IDateTimeProvider dateTimeProvider)
     {
+        _mediator = mediator;
         _dateTimeProvider = dateTimeProvider;
     }
 
@@ -60,7 +65,7 @@ public class CoffeeMachineController : ControllerBase
                 return new EmptyResult();
             }
 
-            var message = "Your piping hot coffee is ready";
+            var message = await _mediator.Send(new GetCoffeeMessageQuery("Manila"));
 
             // Format as ISO-8601 without milliseconds and without colon in timezone offset
             var prepared = now.ToString("yyyy-MM-ddTHH:mm:sszzz");
@@ -79,15 +84,4 @@ public class CoffeeMachineController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
         }
     }
-}
-
-public interface IDateTimeProvider
-{
-    DateTime Now { get; }
-}
-
-// Default implementation for production
-public class SystemDateTimeProvider : IDateTimeProvider
-{
-    public DateTime Now => DateTime.Now;
 }
